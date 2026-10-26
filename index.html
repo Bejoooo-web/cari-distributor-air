@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f4f7f5">
+  <title>Cari distributor air terdekat</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --page: #f4f7f5;
+      --surface: #ffffff;
+      --text: #182321;
+      --muted: #56645f;
+      --border: #d8e1dc;
+      --accent: #146b53;
+      --accent-hover: #0f523f;
+      --accent-text: #ffffff;
+      --soft: #eaf3ee;
+      --warning: #fff3d7;
+      --warning-border: #e3ad3e;
+      --error: #9e2d24;
+      --focus: #2563eb;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --page: #101715;
+        --surface: #19221f;
+        --text: #f1f5f2;
+        --muted: #b8c5be;
+        --border: #34443d;
+        --accent: #4bb98f;
+        --accent-hover: #65cba2;
+        --accent-text: #092018;
+        --soft: #202f29;
+        --warning: #332b18;
+        --warning-border: #8e6d27;
+        --error: #ff8a80;
+        --focus: #8bb8ff;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      padding: max(24px, env(safe-area-inset-top)) 16px max(32px, env(safe-area-inset-bottom));
+      background: var(--page);
+      color: var(--text);
+    }
+
+    main {
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin: 12px 0 24px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.75rem, 7vw, 2.25rem);
+      line-height: 1.15;
+      letter-spacing: -0.035em;
+    }
+
+    .subtitle,
+    .privacy,
+    .or,
+    .status {
+      color: var(--muted);
+    }
+
+    .subtitle {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .panel,
+    .card,
+    .alert {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--surface);
+      box-shadow: 0 5px 20px rgb(20 45 35 / 5%);
+    }
+
+    .panel {
+      padding: 18px;
+    }
+
+    button,
+    select {
+      width: 100%;
+      min-height: 50px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font: inherit;
+    }
+
+    button {
+      padding: 12px 16px;
+      background: var(--accent);
+      color: var(--accent-text);
+      border-color: transparent;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: var(--accent-hover);
+    }
+
+    button:disabled {
+      cursor: wait;
+      opacity: 0.7;
+    }
+
+    select {
+      padding: 10px 12px;
+      background: var(--surface);
+      color: var(--text);
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
+
+    .or {
+      margin: 14px 0;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 650;
+    }
+
+    .privacy {
+      margin: 14px 2px 0;
+      font-size: 0.875rem;
+      text-align: center;
+    }
+
+    .status {
+      min-height: 1.5em;
+      margin: 16px 2px 0;
+      line-height: 1.45;
+    }
+
+    .status.error {
+      color: var(--error);
+    }
+
+    #results {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .card,
+    .alert {
+      padding: 16px;
+    }
+
+    .card h2 {
+      margin: 0 0 5px;
+      font-size: 1.1rem;
+    }
+
+    .card p,
+    .alert p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .card a,
+    .alert a {
+      display: inline-flex;
+      min-height: 46px;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 14px;
+      border-radius: 11px;
+      background: #16834e;
+      color: #ffffff;
+      font-weight: 700;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .card a:hover,
+    .alert a:hover {
+      background: #106b3f;
+    }
+
+    .alert {
+      border-color: var(--warning-border);
+      background: var(--warning);
+    }
+
+    .alert strong {
+      display: block;
+      margin-bottom: 8px;
+      line-height: 1.45;
+    }
+
+    @media (min-width: 600px) {
+      body {
+        padding-top: 48px;
+      }
+
+      .panel {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <header>
+      <h1>Cari distributor air terdekat</h1>
+      <p class="subtitle">Pilih lokasimu, lalu hubungi distributor lewat WhatsApp.</p>
+    </header>
+
+    <section class="panel" aria-label="Pilih lokasi">
+      <button id="gpsButton" type="button">Gunakan lokasi saya</button>
+      <p class="or">atau</p>
+      <label for="areaSelect">Pilih daerahmu</label>
+      <select id="areaSelect" disabled>
+        <option value="">Memuat daftar daerah…</option>
+      </select>
+      <p class="privacy">Lokasimu hanya dipakai untuk mencari distributor.</p>
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <section id="results" aria-live="polite" aria-label="Hasil pencarian"></section>
+  </main>
+
+  <script>
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyZmZeKIJf8EnFUYbPpqVjDRV_VbR_RKNT2vaurRCCLDw-CVkQnw2G7J_8MIRodeMpC/exec";
+    const gpsButton = document.getElementById("gpsButton");
+    const areaSelect = document.getElementById("areaSelect");
+    const statusElement = document.getElementById("status");
+    const resultsElement = document.getElementById("results");
+    let requestNumber = 0;
+
+    function setStatus(message, isError) {
+      statusElement.textContent = message;
+      statusElement.classList.toggle("error", Boolean(isError));
+    }
+
+    function isConfigured() {
+      return APPS_SCRIPT_URL.startsWith("https://script.google.com/macros/s/") &&
+        APPS_SCRIPT_URL.endsWith("/exec");
+    }
+
+    function jsonp(parameters) {
+      return new Promise(function (resolve, reject) {
+        if (!isConfigured()) {
+          reject(new Error("URL Web App Apps Script belum dipasang di index.html."));
+          return;
+        }
+
+        const callbackName = "distributorCallback" + Date.now() + "_" + (++requestNumber);
+        const script = document.createElement("script");
+        const query = new URLSearchParams(parameters);
+        let timeoutId;
+
+        function cleanup() {
+          window.clearTimeout(timeoutId);
+          delete window[callbackName];
+          script.remove();
+        }
+
+        window[callbackName] = function (data) {
+          cleanup();
+          resolve(data);
+        };
+        script.onerror = function () {
+          cleanup();
+          reject(new Error("Tidak dapat menghubungi server. Periksa URL Apps Script dan koneksi internet."));
+        };
+        timeoutId = window.setTimeout(function () {
+          cleanup();
+          reject(new Error("Server terlalu lama merespons. Coba lagi sebentar."));
+        }, 20000);
+
+        query.set("callback", callbackName);
+        script.src = APPS_SCRIPT_URL + "?" + query.toString();
+        document.head.appendChild(script);
+      });
+    }
+
+    function clearResults() {
+      resultsElement.replaceChildren();
+    }
+
+    function makeSafeWhatsAppLink(url, label) {
+      if (typeof url !== "string" ||
+        !/^https:\/\/wa\.me\/[1-9][0-9]{9,14}\?text=/.test(url)) {
+        return null;
+      }
+      const link = document.createElement("a");
+      link.href = url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = label;
+      return link;
+    }
+
+    function showResults(data) {
+      clearResults();
+      if (!data || data.ok !== true) {
+        throw new Error(data && data.pesan ? data.pesan : "Respons server tidak dikenali.");
+      }
+
+      if (data.status === "kosong") {
+        const box = document.createElement("div");
+        box.className = "alert";
+        const message = document.createElement("strong");
+        message.textContent = "Belum ada distributor yang menjangkau lokasimu. Hubungi admin pusat dan kami bantu carikan.";
+        box.appendChild(message);
+        const link = makeSafeWhatsAppLink(data.admin_url, "Hubungi admin pusat");
+        if (link) {
+          box.appendChild(link);
+        } else {
+          const help = document.createElement("p");
+          help.textContent = "Nomor admin pusat belum tersedia. Silakan hubungi pengelola halaman ini.";
+          box.appendChild(help);
+        }
+        resultsElement.appendChild(box);
+        return;
+      }
+
+      if (data.status !== "hasil" || !Array.isArray(data.hasil)) {
+        throw new Error("Data hasil dari server tidak lengkap.");
+      }
+
+      data.hasil.forEach(function (item) {
+        const card = document.createElement("article");
+        card.className = "card";
+        const name = document.createElement("h2");
+        name.textContent = String(item.nama || "Distributor");
+        const details = document.createElement("p");
+        const distance = Number(item.jarak_km);
+        const distanceText = Number.isFinite(distance) ? distance.toFixed(1).replace(".", ",") : "—";
+        details.textContent = String(item.kota || "") + ", sekitar " + distanceText +
+          " km (" + String(item.label || "") + ")";
+        card.appendChild(name);
+        card.appendChild(details);
+        const link = makeSafeWhatsAppLink(item.wa_url, "Hubungi lewat WhatsApp");
+        if (link) {
+          card.appendChild(link);
+        } else {
+          const warning = document.createElement("p");
+          warning.textContent = "Link WhatsApp distributor ini tidak valid. Hubungi admin pusat.";
+          card.appendChild(warning);
+        }
+        resultsElement.appendChild(card);
+      });
+    }
+
+    async function search(parameters) {
+      clearResults();
+      gpsButton.disabled = true;
+      areaSelect.disabled = true;
+      setStatus("Sedang mencari distributor terdekat…", false);
+      try {
+        const data = await jsonp(Object.assign({ action: "search" }, parameters));
+        showResults(data);
+        setStatus("", false);
+      } catch (error) {
+        setStatus(error.message || "Pencarian gagal. Silakan coba lagi.", true);
+      } finally {
+        gpsButton.disabled = false;
+        areaSelect.disabled = areaSelect.options.length < 2;
+      }
+    }
+
+    async function loadAreas() {
+      try {
+        const data = await jsonp({ action: "areas" });
+        if (!data || data.ok !== true || !Array.isArray(data.areas)) {
+          throw new Error(data && data.pesan ? data.pesan : "Daftar daerah tidak bisa dibaca.");
+        }
+        areaSelect.replaceChildren();
+        const prompt = document.createElement("option");
+        prompt.value = "";
+        prompt.textContent = data.areas.length ? "Pilih daerahmu" : "Daftar daerah belum tersedia";
+        areaSelect.appendChild(prompt);
+        data.areas.forEach(function (area) {
+          const option = document.createElement("option");
+          option.value = String(area.nama_area || "");
+          option.textContent = String(area.nama_area || "");
+          areaSelect.appendChild(option);
+        });
+        areaSelect.disabled = data.areas.length === 0;
+        if (data.areas.length === 0) {
+          setStatus("Daftar area belum diisi. Kamu masih bisa memakai GPS.", false);
+        }
+      } catch (error) {
+        areaSelect.replaceChildren();
+        const option = document.createElement("option");
+        option.value = "";
+        option.textContent = "Daftar daerah gagal dimuat";
+        areaSelect.appendChild(option);
+        areaSelect.disabled = true;
+        setStatus(error.message || "Daftar daerah gagal dimuat.", true);
+      }
+    }
+
+    gpsButton.addEventListener("click", function () {
+      clearResults();
+      if (!navigator.geolocation) {
+        setStatus("Lokasi tidak bisa diakses. Izinkan akses lokasi, atau pilih daerahmu dari daftar.", true);
+        return;
+      }
+      gpsButton.disabled = true;
+      areaSelect.disabled = true;
+      setStatus("Sedang mengambil lokasimu…", false);
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          search({
+            lat: String(position.coords.latitude),
+            lon: String(position.coords.longitude)
+          });
+        },
+        function () {
+          gpsButton.disabled = false;
+          areaSelect.disabled = areaSelect.options.length < 2;
+          setStatus(
+            "Lokasi tidak bisa diakses. Izinkan akses lokasi, atau pilih daerahmu dari daftar.",
+            true
+          );
+        },
+        { enableHighAccuracy: false, timeout: 12000, maximumAge: 60000 }
+      );
+    });
+
+    areaSelect.addEventListener("change", function () {
+      if (areaSelect.value) {
+        search({ area: areaSelect.value });
+      }
+    });
+
+    loadAreas();
+  </script>
+</body>
+
+</html>
