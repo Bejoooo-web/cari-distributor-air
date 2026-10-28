@@ -4,20 +4,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#f4f7f5">
+  <meta name="theme-color" content="#fff5f5">
   <title>Cari distributor air terdekat</title>
   <style>
     :root {
       color-scheme: light dark;
-      --page: #f4f7f5;
+      --page: #fff5f5;
       --surface: #ffffff;
-      --text: #182321;
-      --muted: #56645f;
-      --border: #d8e1dc;
-      --accent: #146b53;
-      --accent-hover: #0f523f;
+      --text: #2d1718;
+      --muted: #725b5c;
+      --border: #edd3d4;
+      --accent: #c62828;
+      --accent-hover: #a91f1f;
       --accent-text: #ffffff;
-      --soft: #eaf3ee;
+      --soft: #fdeaea;
       --warning: #fff3d7;
       --warning-border: #e3ad3e;
       --error: #9e2d24;
@@ -27,15 +27,15 @@
 
     @media (prefers-color-scheme: dark) {
       :root {
-        --page: #101715;
-        --surface: #19221f;
-        --text: #f1f5f2;
-        --muted: #b8c5be;
-        --border: #34443d;
-        --accent: #4bb98f;
-        --accent-hover: #65cba2;
-        --accent-text: #092018;
-        --soft: #202f29;
+        --page: #1c1112;
+        --surface: #26191a;
+        --text: #fff4f4;
+        --muted: #d2bebe;
+        --border: #503638;
+        --accent: #ef5350;
+        --accent-hover: #ff716e;
+        --accent-text: #ffffff;
+        --soft: #352224;
         --warning: #332b18;
         --warning-border: #8e6d27;
         --error: #ff8a80;
@@ -63,6 +63,16 @@
 
     header {
       margin: 12px 0 24px;
+      text-align: center;
+    }
+
+    .brand-logo {
+      display: none;
+      width: auto;
+      max-width: 220px;
+      height: 72px;
+      object-fit: contain;
+      margin: 0 auto 12px;
     }
 
     h1 {
@@ -196,8 +206,8 @@
       justify-content: center;
       padding: 10px 14px;
       border-radius: 11px;
-      background: #16834e;
-      color: #ffffff;
+      background: var(--accent);
+      color: var(--accent-text);
       font-weight: 700;
       text-align: center;
       text-decoration: none;
@@ -205,7 +215,7 @@
 
     .card a:hover,
     .alert a:hover {
-      background: #106b3f;
+      background: var(--accent-hover);
     }
 
     .alert {
@@ -234,7 +244,8 @@
 <body>
   <main>
     <header>
-      <h1>Cari distributor Anana Super Oksigen terdekat</h1>
+      <img id="brandLogo" class="brand-logo" alt="Logo perusahaan">
+      <h1>Cari distributor air terdekat</h1>
       <p class="subtitle">Pilih lokasimu, lalu hubungi distributor lewat WhatsApp.</p>
     </header>
 
@@ -254,11 +265,18 @@
 
   <script>
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyZmZeKIJf8EnFUYbPpqVjDRV_VbR_RKNT2vaurRCCLDw-CVkQnw2G7J_8MIRodeMpC/exec";
+    const LOGO_URL = ""; // Contoh: "logo.png" atau URL logo HTTPS.
+    const brandLogo = document.getElementById("brandLogo");
     const gpsButton = document.getElementById("gpsButton");
     const areaSelect = document.getElementById("areaSelect");
     const statusElement = document.getElementById("status");
     const resultsElement = document.getElementById("results");
     let requestNumber = 0;
+
+    if (LOGO_URL) {
+      brandLogo.src = LOGO_URL;
+      brandLogo.style.display = "block";
+    }
 
     function setStatus(message, isError) {
       statusElement.textContent = message;
