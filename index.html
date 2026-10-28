@@ -265,7 +265,7 @@
 
   <script>
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyZmZeKIJf8EnFUYbPpqVjDRV_VbR_RKNT2vaurRCCLDw-CVkQnw2G7J_8MIRodeMpC/exec";
-    const LOGO_URL = "LOGO.png"; 
+    const LOGO_URL = "LOGO.png";
     const brandLogo = document.getElementById("brandLogo");
     const gpsButton = document.getElementById("gpsButton");
     const areaSelect = document.getElementById("areaSelect");
@@ -274,8 +274,14 @@
     let requestNumber = 0;
 
     if (LOGO_URL) {
+      brandLogo.addEventListener("load", function () {
+        brandLogo.style.display = "block";
+      });
+      brandLogo.addEventListener("error", function () {
+        brandLogo.style.display = "none";
+        brandLogo.removeAttribute("src");
+      });
       brandLogo.src = LOGO_URL;
-      brandLogo.style.display = "block";
     }
 
     function setStatus(message, isError) {
